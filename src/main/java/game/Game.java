@@ -19,7 +19,8 @@ public class Game {
             new ResetCommand(),
             new SaveCommand(),
             new LoadCommand(),
-            new HighScoresCommand()
+            new HighScoresCommand(),
+            new DelNameCommand()
     };
 
     public Game() {
@@ -84,7 +85,7 @@ public class Game {
     }
 
     private char sign(int player) {
-        return player == 1 ? 'X': player == 0? '.':'o';
+        return player == 1 ? 'x': player == 0? '.':'o';
     }
 
 

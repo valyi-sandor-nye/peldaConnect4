@@ -8,6 +8,5 @@ import java.util.regex.Pattern;
 
 public interface Command {
     Pattern getPattern();
-
     void execute(Matcher matcher, Game game);
 }

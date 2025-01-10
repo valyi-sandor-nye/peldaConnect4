@@ -20,7 +20,7 @@ public class ResetCommand implements Command {
         game.getGameState().setBoard(new Board());
         game.setBoardService(new BoardService(game.getGameState().getBoard()));
         game.getGameState().setPlayer(1);
-        System.out.println("Game reset.");
         game.printBoard();
+        System.out.println("Game reset.");
     }
 }

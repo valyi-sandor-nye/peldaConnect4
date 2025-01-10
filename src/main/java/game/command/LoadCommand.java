@@ -2,6 +2,7 @@ package game.command;
 
 import game.Game;
 import model.Board;
+import model.GameState;
 import service.BoardService;
 
 import java.io.BufferedReader;
@@ -20,15 +21,16 @@ public class LoadCommand implements Command {
 
     @Override
     public void execute(Matcher matcher, Game game) {
-        if (game.getGameState().getPlayerName() == null || game.getGameState().getPlayerName().isEmpty()) {
+        GameState gamestate = game.getGameState();
+        if (gamestate.getPlayerName() == null || gamestate.getPlayerName().isEmpty()) {
             System.out.println("Player name must be set before loading.");
             return;
         }
 
-        String filename = "connect4save_" + game.getGameState().getPlayerName() + ".txt";
+        String filename = "connect4save_" + gamestate.getPlayerName() + ".txt";
         try (BufferedReader reader = new BufferedReader(new FileReader(filename))) {
-            game.getGameState().setPlayerName(reader.readLine());
-            game.getGameState().setPlayer(Integer.parseInt(reader.readLine()));
+            gamestate.setPlayerName(reader.readLine());
+            gamestate.setPlayer(Integer.parseInt(reader.readLine()));
             int[][] boardData = new int[Board.getN()][Board.getM()];
             for (int i = 0; i < Board.getN(); i++) {
                 String[] rowData = reader.readLine().split(" ");
@@ -36,9 +38,9 @@ public class LoadCommand implements Command {
                     boardData[i][j] = Integer.parseInt(rowData[j]);
                 }
             }
-            game.getGameState().setBoard(new Board());
-            game.getGameState().getBoard().setBoard(boardData);
-            game.setBoardService(new BoardService(game.getGameState().getBoard()));
+            gamestate.setBoard(new Board());
+            gamestate.getBoard().setBoard(boardData);
+            game.setBoardService(new BoardService(gamestate.getBoard()));
             System.out.println("Game loaded from " + filename);
             game.printBoard();
 

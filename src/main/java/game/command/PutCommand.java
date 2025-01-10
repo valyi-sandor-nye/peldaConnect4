@@ -9,7 +9,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class PutCommand implements Command {
-    private static final Pattern PATTERN = Pattern.compile("^PUT\\s+(\\d+)$");
+    private static final Pattern PATTERN = Pattern.compile("^PUT\\s+(\\d{1,2})$");
 
     @Override
     public Pattern getPattern() {
