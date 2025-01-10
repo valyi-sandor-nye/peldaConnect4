@@ -6,7 +6,7 @@ public class GameState {
     int human = 1;
     String playerName;
 
-    GameState(Board board, int player, int human, String playerName) {
+    public GameState(Board board, int player, int human, String playerName) {
         this.board = board;
         this.player = player;
         this.human = human;
