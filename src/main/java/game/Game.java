@@ -8,7 +8,6 @@ import model.Move;
 import service.BoardService;
 import java.util.Random;
 import java.util.regex.Matcher;
-import game.command.*;
 
 public class Game {
     GameState gameState;
@@ -20,7 +19,7 @@ public class Game {
             new ResetCommand(),
             new SaveCommand(),
             new LoadCommand(),
-            new HighscoresCommand()
+            new HighScoresCommand()
     };
 
     public Game() {
@@ -44,7 +43,7 @@ public class Game {
         this.boardService = boardService;
     }
 
-    public void processCommand(String commandString) throws FullColumnException {
+    public void processCommand(String commandString) {
         for (Command command : commands) {
             Matcher matcher = command.getPattern().matcher(commandString);
             if (matcher.matches()) {
@@ -55,7 +54,7 @@ public class Game {
         System.out.println("Invalid command.");
     }
 
-    public void aiMove() throws FullColumnException {
+    public void aiMove() {
         Random random = new Random();
         int col;
         int[][] board = gameState.getBoard().getBoard();
@@ -65,7 +64,11 @@ public class Game {
         Move move = new Move();
         move.setCol(col);
         move.setPlayer(gameState.getHuman() * -1);
-        boardService.doMove(move);
+        try {
+            boardService.doMove(move);
+        } catch (FullColumnException e) {
+            System.err.println("Érdekes szitu. Az ai rossz teli soszlopba lépett.");
+        }
         gameState.setPlayer(gameState.getHuman());
     }
 
@@ -84,15 +87,5 @@ public class Game {
         return player == 1 ? 'X': player == 0? '.':'o';
     }
 
-    public static void main3(String[] args) throws FullColumnException { // TODO REMOVE
-            Game game = new Game();
-            java.util.Scanner scanner = new java.util.Scanner(System.in);
-            game.printBoard();
-            while (true) {
-                System.out.print("> ");
-                String command = scanner.nextLine();
-                game.processCommand(command);
-            }
-    }
 
 }

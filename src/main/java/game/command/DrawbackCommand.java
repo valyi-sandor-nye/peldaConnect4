@@ -6,7 +6,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class DrawbackCommand implements Command {
-    private static final Pattern PATTERN = Pattern.compile("^DRAWBACK1$");
+    private static final Pattern PATTERN = Pattern.compile("^DRAWBACK$");
 
     @Override
     public Pattern getPattern() {

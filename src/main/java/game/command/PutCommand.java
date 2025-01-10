@@ -17,18 +17,18 @@ public class PutCommand implements Command {
     }
 
     @Override
-    public void execute(Matcher matcher, Game game) throws FullColumnException {
+    public void execute(Matcher matcher, Game game) {
         int col = Integer.parseInt(matcher.group(1));
         if (col < 0 || col >= Board.getM()) {
             System.out.println("Invalid column number.");
             return;
         }
         Move move = new Move();
-        move.setCol(col);
-        move.setPlayer(game.getGameState().getHuman());
+            move.setCol(col);
+            move.setPlayer(game.getGameState().getHuman());
         try {
             game.getBoardService().doMove(move);
-        } catch (FullColumnException fcex) {System.err.println(fcex.getMessage());}
+        } catch (FullColumnException fcex) {System.err.println("teli oszlopba raktál.");}
         game.getGameState().setPlayer(game.getGameState().getHuman() * -1);
         game.printBoard();
         game.aiMove();

@@ -6,12 +6,12 @@ import service.BoardService;
 
 public class Main {
 
-    public static void main(String[] args) throws FullColumnException {
+    public static void main(String[] args) {
         Game game = new Game();
         java.util.Scanner scanner = new java.util.Scanner(System.in);
         game.printBoard();
         while (true) {
-            System.out.print("> ");
+            System.out.print(game.getGameState().getPlayerName()+"> ");
             String command = scanner.nextLine();
             game.processCommand(command);
         }
@@ -19,7 +19,7 @@ public class Main {
 
 
 
-    public static void main2(String[] args) throws FullColumnException { //TODO THIS IS JUST FOR MANUAL TESTS
+   /* public static void main2(String[] args) { //TODO THIS IS JUST FOR MANUAL TESTS
         Board board = new Board();
         int N = Board.getN();
         int M = Board.getM();
@@ -41,5 +41,5 @@ public class Main {
         boardService.doMove(move);
         System.out.println(board.toString());
 
-    }
+    } */
 }
