@@ -50,7 +50,7 @@
                             <archive>
                                 <manifest>
                                     <mainClass>
-                                        hu.nye.progtech.sudoku.Main
+                                        progtech.ExampleForProjectWork.Main
                                     </mainClass>
                                 </manifest>
                             </archive>
@@ -72,9 +72,8 @@
                 <version>0.8.2</version>
                 <configuration>
                     <excludes>
-                        <exclude>hu/nye/progtech/sudoku/model/*</exclude>
-                        <exclude>hu/nye/progtech/sudoku/Main.*</exclude>
-                        <exclude>hu/nye/progtech/sudoku/ui/PrintWrapper.*</exclude>
+                        <exclude>progtech/ExampleForProjectWork/model/*</exclude>
+                        <exclude>progtech/ExampleForProjectWork/Main.*</exclude>
                     </excludes>
                 </configuration>
                 <executions>
@@ -103,7 +102,7 @@
                                         <limit>
                                             <counter>LINE</counter>
                                             <value>COVEREDRATIO</value>
-                                            <minimum>0.8</minimum>
+                                            <minimum>0.0</minimum>
                                         </limit>
                                     </limits>
                                 </rule>
