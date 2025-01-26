@@ -1,6 +1,7 @@
 package game;
 
 import java.util.Random;
+import java.util.Scanner;
 import java.util.regex.Matcher;
 
 import exception.FullColumnException;
@@ -16,17 +17,19 @@ public class Game {
     private final Command[] commands = {
             new NameCommand(),
             new PutCommand(),
-            new DrawbackCommand(),
+            new ExitCommand(),
             new ResetCommand(),
             new SaveCommand(),
             new LoadCommand(),
             new HighScoresCommand(),
-            new DelNameCommand()
+            new DelNameCommand(),
+            new PrintCommand()
     };
 
     public Game() {
-        gameState = new GameState(new Board(), 1, 1, "");
-        boardService = new BoardService(gameState.getBoard());
+        Board b = new Board();
+        gameState = new GameState(b, 1, 1, "");
+        boardService = new BoardService(b);
     }
 
     public GameState getGameState() {
@@ -57,6 +60,10 @@ public class Game {
     }
 
     public void aiMove() {
+        if (gameState.getExitus()) return;
+        if (gameState.getExitus() == false && checkEndState()) {
+            return;
+        }
         Random random = new Random();
         int col;
         int[][] board = gameState.getBoard().getBoard();
@@ -69,7 +76,7 @@ public class Game {
         try {
             boardService.doMove(move);
         } catch (FullColumnException e) {
-            System.err.println("Érdekes szitu. Az ai rossz teli soszlopba lépett.");
+            System.err.println("Érdekes szitu. Az ai rossz teli oszlopba lépett.");
         }
         gameState.setPlayer(gameState.getHuman());
     }
@@ -87,6 +94,38 @@ public class Game {
 
     private char sign(int player) {
         return player == 1 ? 'x' : player == 0 ? '.' : 'o';
+    }
+
+    public void run() {
+        Scanner scanner = new Scanner(System.in);
+        printBoard();
+        while (true) {
+            if (checkEndState()) {
+                break;
+            }
+            System.out.print(gameState.getPlayerName() + "> ");
+            String command = scanner.nextLine();
+            processCommand(command);
+        }
+        scanner.close();
+    }
+
+    private boolean checkEndState() {
+        if (boardService.hasWon(gameState.getHuman())) {
+            System.out.println("Human (" + gameState.getPlayerName() + ") has won");
+            gameState.setExitus();
+            new persistence.PointsDBSaver().add1point(gameState.getPlayerName());
+            return true;
+        } else if (boardService.hasWon(-gameState.getHuman())) {
+            System.out.println("Machine has won");
+            new persistence.PointsDBSaver().add1point("ai");
+            gameState.setExitus();
+            return true;
+        } else if (gameState.getExitus()) {
+            System.out.println("Exit command exitcuted.");
+            return true;
+        }
+        return false;
     }
 
 

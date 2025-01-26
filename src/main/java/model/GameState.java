@@ -5,6 +5,7 @@ public class GameState {
     int player = 1;
     int human = 1;
     String playerName;
+    boolean exitus = false;
 
     public GameState(Board board, int player, int human, String playerName) {
         this.board = board;
@@ -43,5 +44,13 @@ public class GameState {
 
     public void setPlayerName(String playerName) {
         this.playerName = playerName;
+    }
+
+    public boolean getExitus() {
+        return exitus;
+    }
+
+    public void setExitus() {
+        exitus = true;
     }
 }

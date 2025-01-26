@@ -6,8 +6,8 @@ import java.util.regex.Pattern;
 import game.Game;
 
 
-public class DrawbackCommand implements Command {
-    private static final Pattern PATTERN = Pattern.compile("^DRAWBACK$");
+public class ExitCommand implements Command {
+    private static final Pattern PATTERN = Pattern.compile("^EXIT$");
 
     @Override
     public Pattern getPattern() {
@@ -16,7 +16,6 @@ public class DrawbackCommand implements Command {
 
     @Override
     public void execute(Matcher matcher, Game game) {
-        // Implement drawback logic here
-        System.out.println("Drawback command executed (not fully implemented).");
+        game.getGameState().setExitus();
     }
 }
