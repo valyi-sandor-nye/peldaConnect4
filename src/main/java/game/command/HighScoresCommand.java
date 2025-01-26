@@ -1,9 +1,10 @@
 package game.command;
 
-import game.Game;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import game.Game;
+
 
 public class HighScoresCommand implements Command {
     private static final Pattern PATTERN = Pattern.compile("^HIGHSCORES$");

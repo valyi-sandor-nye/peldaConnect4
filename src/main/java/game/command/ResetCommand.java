@@ -1,11 +1,11 @@
 package game.command;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import game.Game;
 import model.Board;
 import service.BoardService;
-
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class ResetCommand implements Command {
     private static final Pattern PATTERN = Pattern.compile("^RESET$");

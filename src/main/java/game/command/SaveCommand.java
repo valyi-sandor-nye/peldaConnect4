@@ -1,12 +1,13 @@
 package game.command;
 
-import game.Game;
-import model.GameState;
 
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import game.Game;
+import model.GameState;
 
 public class SaveCommand implements Command {
     private static final Pattern PATTERN = Pattern.compile("^SAVE$");

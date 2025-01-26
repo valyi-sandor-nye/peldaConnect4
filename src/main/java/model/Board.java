@@ -40,8 +40,12 @@ public class Board {
 
     @Override
     public boolean equals(Object o) {
-        if (this == o) return true;
-        if (!(o instanceof Board)) return false;
+        if (this == o) {
+            return true;
+        }
+        if (!(o instanceof Board)) {
+            return false;
+        }
         Board board1 = (Board) o;
         return Arrays.deepEquals(board, board1.board);
     }

@@ -1,13 +1,14 @@
 package game;
 
+import java.util.Random;
+import java.util.regex.Matcher;
+
 import exception.FullColumnException;
 import game.command.*;
 import model.Board;
 import model.GameState;
 import model.Move;
 import service.BoardService;
-import java.util.Random;
-import java.util.regex.Matcher;
 
 public class Game {
     GameState gameState;
@@ -73,19 +74,19 @@ public class Game {
         gameState.setPlayer(gameState.getHuman());
     }
 
-    public void printBoard(){
+    public void printBoard() {
         int[][] board = gameState.getBoard().getBoard();
         System.out.println();
-        for (int i = 0; i< Board.getN(); i++){
-            for(int j = 0; j< Board.getM(); j++){
-                System.out.print(sign(board[i][j])+" ");
+        for (int i = 0; i < Board.getN(); i++) {
+            for (int j = 0; j < Board.getM(); j++) {
+                System.out.print(sign(board[i][j]) + " ");
             }
             System.out.println();
         }
     }
 
     private char sign(int player) {
-        return player == 1 ? 'x': player == 0? '.':'o';
+        return player == 1 ? 'x' : player == 0 ? '.' : 'o';
     }
 
 

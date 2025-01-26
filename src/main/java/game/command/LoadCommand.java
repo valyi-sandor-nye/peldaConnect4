@@ -1,15 +1,16 @@
 package game.command;
 
-import game.Game;
-import model.Board;
-import model.GameState;
-import service.BoardService;
-
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+
+import game.Game;
+import model.Board;
+import model.GameState;
+import service.BoardService;
+
 
 public class LoadCommand implements Command {
     private static final Pattern PATTERN = Pattern.compile("^LOAD$");

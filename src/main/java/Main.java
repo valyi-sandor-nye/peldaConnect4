@@ -11,7 +11,7 @@ public class Main {
         java.util.Scanner scanner = new java.util.Scanner(System.in);
         game.printBoard();
         while (true) {
-            System.out.print(game.getGameState().getPlayerName()+"> ");
+            System.out.print(game.getGameState().getPlayerName() + "> ");
             String command = scanner.nextLine();
             game.processCommand(command);
         }
@@ -19,7 +19,7 @@ public class Main {
 
 
 
-   /* public static void main2(String[] args) { //TODO THIS IS JUST FOR MANUAL TESTS
+    /* public static void main2(String[] args) { //TODO THIS IS JUST FOR MANUAL TESTS
         Board board = new Board();
         int N = Board.getN();
         int M = Board.getM();

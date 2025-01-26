@@ -1,12 +1,13 @@
 package game.command;
 
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import exception.FullColumnException;
 import game.Game;
 import model.Board;
 import model.Move;
 
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class PutCommand implements Command {
     private static final Pattern PATTERN = Pattern.compile("^PUT\\s+(\\d{1,2})$");
@@ -28,7 +29,9 @@ public class PutCommand implements Command {
             move.setPlayer(game.getGameState().getHuman());
         try {
             game.getBoardService().doMove(move);
-        } catch (FullColumnException fcex) {System.err.println("teli oszlopba raktál.");}
+        } catch (FullColumnException fcex) {
+            System.err.println("teli oszlopba raktál.");
+        }
         game.getGameState().setPlayer(game.getGameState().getHuman() * -1);
         game.printBoard();
         game.aiMove();
