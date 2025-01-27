@@ -13,12 +13,12 @@ import org.slf4j.LoggerFactory;
 
 public class PutCommand implements Command {
     private static final Pattern PATTERN = Pattern.compile("^PUT\\s+(\\d{1,2})$");
+    private static final Logger logger = LoggerFactory.getLogger(Command.class);
 
     @Override
     public Pattern getPattern() {
         return PATTERN;
     }
-    private static final Logger logger = LoggerFactory.getLogger(Command.class);
 
     @Override
     public void execute(Matcher matcher, Game game) {
@@ -33,7 +33,7 @@ public class PutCommand implements Command {
             move.setPlayer(game.getGameState().getHuman());
         try {
             game.getBoardService().doMove(move);
-            logger.info("put command executed into col "+col+".");
+            logger.info("put command executed into col {}.", col);
         } catch (FullColumnException fcex) {
             System.err.println("teli oszlopba raktál.");
             logger.error("teli oszlopba rakott a humán.");

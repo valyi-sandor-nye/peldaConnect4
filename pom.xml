@@ -79,8 +79,8 @@
                 <version>0.8.2</version>
                 <configuration>
                     <excludes>
-                        <exclude>progtech/ExampleForProjectWork/model/*</exclude>
-                        <exclude>progtech/ExampleForProjectWork/Main.*</exclude>
+                        <exclude>model/*</exclude>
+                        <exclude>Main.*</exclude>
                     </excludes>
                 </configuration>
                 <executions>
