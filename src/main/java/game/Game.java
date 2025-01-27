@@ -116,7 +116,7 @@ public class Game {
         scanner.close();
     }
 
-    private boolean checkEndState() {
+    public boolean checkEndState() {
         if (boardService.isFull()) {
             System.out.println("The game is ended but  undecided, the board is full");
             logger.info("The game is ended but  undecided, the board is full");
