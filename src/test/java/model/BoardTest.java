@@ -44,8 +44,7 @@ public class BoardTest {
     public void testHashCode_EqualBoards() {
         Board board1 = new Board();
         Board board2 = new Board();
-        // TODO assertEquals(board1.hashCode(), board2.hashCode(), "Equal boards should have same hash code");
-        assertEquals(1,1);
+        assertEquals(board1.hashCode(), board2.hashCode(), "Equal boards should have same hash code");
     }
 
     @Test

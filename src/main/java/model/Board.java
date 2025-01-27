@@ -52,6 +52,6 @@ public class Board {
 
     @Override
     public int hashCode() {
-        return Arrays.hashCode(board);
+        return Arrays.deepHashCode(board);
     }
 }
