@@ -9,6 +9,8 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import game.Game;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 
 public class HighScoresCommand implements Command {
@@ -16,6 +18,9 @@ public class HighScoresCommand implements Command {
     private static final String JDBC_URL = "jdbc:h2:~/connect4";
     private static final String USER = "A";
     private static final String PASSWORD = "";
+    private static final String tableName = "HIGHSCORES";
+    private static final Logger logger = LoggerFactory.getLogger(Command.class);
+
 
     static {
         try {
@@ -34,7 +39,7 @@ public class HighScoresCommand implements Command {
     public void execute(Matcher matcher, Game game) {
         try (Connection conn = DriverManager.getConnection(JDBC_URL, USER, PASSWORD)) {
             // Check if Highscores table exists
-            if (tableExists(conn, "HIGHSCORES")) {
+            if (tableExists(conn)) {
                 // List all records in Highscores table
                 listHighScores(conn);
             } else {
@@ -42,13 +47,15 @@ public class HighScoresCommand implements Command {
             }
         } catch (SQLException e) {
             System.err.println("Failed to connect to the database: " + e.getMessage());
+            logger.error("Failed to connect to the database: " + e.getMessage());
         }
+        logger.info("highscores command executed");
     }
 
-    private boolean tableExists(Connection conn, String tableName) throws SQLException {
+    private boolean tableExists(Connection conn) throws SQLException {
         String checkTableSQL = "SELECT * FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_NAME = ?";
         try (PreparedStatement pstmt = conn.prepareStatement(checkTableSQL)) {
-            pstmt.setString(1, tableName.toUpperCase());
+            pstmt.setString(1, tableName);
             ResultSet rs = pstmt.executeQuery();
             return rs.next();
         }

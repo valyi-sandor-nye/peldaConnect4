@@ -8,9 +8,12 @@ import java.util.regex.Pattern;
 
 import game.Game;
 import model.GameState;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SaveCommand implements Command {
     private static final Pattern PATTERN = Pattern.compile("^SAVE$");
+    private static final Logger logger = LoggerFactory.getLogger(Command.class);
 
     @Override
     public Pattern getPattern() {
@@ -32,8 +35,10 @@ public class SaveCommand implements Command {
                 writer.write("\n");
             }
             System.out.println("Game saved to " + filename);
+            logger.info("Game saved to " + filename);
         } catch (IOException e) {
             System.err.println("Error saving game: " + e.getMessage());
+            logger.error("Error saving game: " + e.getMessage());
         }
     }
 }

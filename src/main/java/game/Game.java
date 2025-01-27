@@ -9,6 +9,8 @@ import game.command.*;
 import model.Board;
 import model.GameState;
 import model.Move;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import service.BoardService;
 
 public class Game {
@@ -25,6 +27,8 @@ public class Game {
             new DelNameCommand(),
             new PrintCommand()
     };
+    private static final Logger logger = LoggerFactory.getLogger(Game.class);
+
 
     public Game() {
         Board b = new Board();
@@ -40,9 +44,6 @@ public class Game {
         return boardService;
     }
 
-    public void setGameState(GameState gameState) {
-        this.gameState = gameState;
-    }
 
     public void setBoardService(BoardService boardService) {
         this.boardService = boardService;
@@ -57,11 +58,14 @@ public class Game {
             }
         }
         System.out.println("Invalid command.");
+        logger.error("Invalid command arrived.");
     }
 
     public void aiMove() {
-        if (gameState.getExitus()) return;
-        if (gameState.getExitus() == false && checkEndState()) {
+        if (gameState.getExitus()) {
+            return;
+        }
+        if (!gameState.getExitus() && checkEndState()) {
             return;
         }
         Random random = new Random();
@@ -75,8 +79,10 @@ public class Game {
         move.setPlayer(gameState.getHuman() * -1);
         try {
             boardService.doMove(move);
+            logger.info("ai made a move to col {}.", col);
         } catch (FullColumnException e) {
-            System.err.println("Érdekes szitu. Az ai rossz teli oszlopba lépett.");
+            System.err.println("Weird. The ai found out a bad column.");
+            logger.warn("Weird. The ai found out a bad column.");
         }
         gameState.setPlayer(gameState.getHuman());
     }
@@ -111,18 +117,27 @@ public class Game {
     }
 
     private boolean checkEndState() {
+        if (boardService.isFull()) {
+            System.out.println("The game is ended but  undecided, the board is full");
+            logger.info("The game is ended but  undecided, the board is full");
+            gameState.setExitus();
+            return true;
+        }
         if (boardService.hasWon(gameState.getHuman())) {
             System.out.println("Human (" + gameState.getPlayerName() + ") has won");
+            logger.info("Human ({}) has won", gameState.getPlayerName());
             gameState.setExitus();
             new persistence.PointsDBSaver().add1point(gameState.getPlayerName());
             return true;
         } else if (boardService.hasWon(-gameState.getHuman())) {
             System.out.println("Machine has won");
+            logger.info("Machine has won");
             new persistence.PointsDBSaver().add1point("ai");
             gameState.setExitus();
             return true;
         } else if (gameState.getExitus()) {
             System.out.println("Exit command exitcuted.");
+            logger.info("Exit command exitcuted.");
             return true;
         }
         return false;

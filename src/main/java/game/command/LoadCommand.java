@@ -9,11 +9,14 @@ import java.util.regex.Pattern;
 import game.Game;
 import model.Board;
 import model.GameState;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import service.BoardService;
 
 
 public class LoadCommand implements Command {
     private static final Pattern PATTERN = Pattern.compile("^LOAD$");
+    private static final Logger logger = LoggerFactory.getLogger(Command.class);
 
     @Override
     public Pattern getPattern() {
@@ -25,6 +28,7 @@ public class LoadCommand implements Command {
         GameState gamestate = game.getGameState();
         if (gamestate.getPlayerName() == null || gamestate.getPlayerName().isEmpty()) {
             System.out.println("Player name must be set before loading.");
+            logger.error("load command execution tried without use name");
             return;
         }
 
@@ -44,11 +48,14 @@ public class LoadCommand implements Command {
             game.setBoardService(new BoardService(gamestate.getBoard()));
             System.out.println("Game loaded from " + filename);
             game.printBoard();
+            logger.info("Game loaded from " + filename);
 
         } catch (IOException e) {
             System.err.println("Error loading game: " + e.getMessage());
+            logger.error("Error loading game: " + e.getMessage());
         } catch (NumberFormatException e) {
             System.err.println("Error loading game: Invalid file format");
+            logger.error("Error loading game: Invalid file format");
         }
     }
 }

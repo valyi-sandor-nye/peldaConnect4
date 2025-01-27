@@ -13,8 +13,8 @@ public class BoardService {
 
     public BoardService(Board board) {
         this.board = board;
-        int M = Board.getM();
-        int N = Board.getN();
+        M = Board.getM();
+        N = Board.getN();
         arr = board.getBoard();
     }
 
